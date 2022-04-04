@@ -14,10 +14,11 @@ import java.util.List;
 @Getter
 @ToString
 @Entity //defines we want this class persisted to the database
-@Table(name = "users")
+@Table(name = "network_users")
 public class User {
-    @Id  //defines primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrements
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement
     private Integer id;
 
     @Column(unique = true, nullable = false)
@@ -26,17 +27,41 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String firstname;
+
+    @Column(nullable = false)
+    private String lastname;
+
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true, nullable = true)
+    @Column
     private String profilePictureLocation; // store the location of the picture in our s3 bucket
+    // "https://ons3bucket.s3.amazonaws.com/profilePics/coolimage.jpeg"
 
     @CreationTimestamp
     @Column(updatable = false) // NOTE: need this constraint so that when you update a user the "creationDate" field doesn't become null
     private Date creationDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    //posts foreign key (one user to many posts)
+    @OneToMany(mappedBy = "authorIdFK", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
+    private String bio;
+
+    // need to add a constructor to validate credentials
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    //need to add a constructor with all the minimum fields required to create a new user (all the nullable=false ones)
+    public User(String username, String password, String firstname, String lastname, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+    }
 }
