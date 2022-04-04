@@ -24,6 +24,4 @@ public class Like {
     //many likes to one post
     @ManyToOne
     private Post postFk;
-
-
 }
