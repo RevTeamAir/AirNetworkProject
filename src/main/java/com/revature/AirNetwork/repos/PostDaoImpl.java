@@ -2,7 +2,11 @@ package com.revature.AirNetwork.repos;
 
 import com.revature.AirNetwork.models.Post;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
+
+@Repository
 
 public class PostDaoImpl implements PostDao{
     @Override
@@ -11,17 +15,23 @@ public class PostDaoImpl implements PostDao{
     }
 
     @Override
-    public List<Post> getAllPost() {
+
+    public List<Post> getAllPosts() {
+
         return null;
     }
 
     @Override
-    public Post getOnePost(Integer postId) {
+
+    public List<Post> getAllPostsGivenUserId() {
+
         return null;
     }
 
     @Override
-    public void removePost(Post post) {
+
+    public Post GetPostGivenPostId() {
+        return null;
 
     }
 }
