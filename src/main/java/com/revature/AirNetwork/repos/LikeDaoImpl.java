@@ -1,5 +1,6 @@
 package com.revature.AirNetwork.repos;
 
+import com.revature.AirNetwork.models.Like;
 import com.revature.AirNetwork.models.Post;
 import com.revature.AirNetwork.models.User;
 import org.hibernate.Session;
@@ -18,6 +19,11 @@ public class LikeDaoImpl implements LikeDao {
     public User addLike(User userId, Post postId) {
         Session session = em.unwrap(Session.class);
 
+        return null;
+    }
+
+    @Override
+    public Like getAllLikes() {
         return null;
     }
 

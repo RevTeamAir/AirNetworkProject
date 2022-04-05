@@ -47,5 +47,4 @@ public class Post {
 
     @ManyToMany
     private List<Like> likes = new ArrayList<>();
-
 }

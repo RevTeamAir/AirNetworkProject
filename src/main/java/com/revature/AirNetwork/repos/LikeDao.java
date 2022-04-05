@@ -6,7 +6,7 @@ import com.revature.AirNetwork.models.User;
 
 public interface LikeDao {
     User addLike(User userId, Post postId);
+    Like getAllLikes();
     void removeLike();
 
-    //void addLike();
 }
