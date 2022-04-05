@@ -11,8 +11,16 @@ import java.util.List;
 @Service
 @Transactional
 public class PostService {
-    @Autowired
+
     private PostDao postDao;
+
+    public PostService() {
+    }
+
+    @Autowired
+    public PostService(PostDao postDao) {
+        this.postDao = postDao;
+    }
 
     public Post createPost(Post post) {
         Integer postId = this.postDao.createPost(post);
@@ -25,6 +33,10 @@ public class PostService {
 
     public List<Post> getAllPosts() {
         return this.postDao.getAllPosts();
+    }
+
+    public List<Post> getAllPostsGivenUserId(Integer userId){
+        return this.postDao.getAllPostsGivenUserId(userId);
     }
 
     //TODO add remove one post
