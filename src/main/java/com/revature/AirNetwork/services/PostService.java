@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PostServices {
+public class PostService {
     @Autowired
     private PostDao postDao;
 
@@ -23,8 +23,8 @@ public class PostServices {
         return this.postDao.getOnePost(postId);
     }
 
-    public List<Post> getAllPost() {
-        return this.postDao.getAllPost();
+    public List<Post> getAllPosts() {
+        return this.postDao.getAllPosts();
     }
 
     //TODO add remove one post
