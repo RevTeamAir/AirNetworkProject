@@ -1,18 +1,20 @@
 package com.revature.AirNetwork.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "network_posts")
 public class Post {
@@ -40,5 +42,10 @@ public class Post {
 
     //MULTIPLICITY RELATIONSHIPS
     @ManyToOne
+    @JsonIgnoreProperties({"posts"})
     private User authorIdFK;
+
+    @ManyToMany
+    private List<Like> likes = new ArrayList<>();
+
 }
