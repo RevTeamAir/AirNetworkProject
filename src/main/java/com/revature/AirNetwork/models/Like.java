@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +25,5 @@ public class Like {
     //many likes to one post
     @ManyToOne
     private Post postFk;
+
 }

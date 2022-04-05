@@ -56,6 +56,7 @@ public class S3Service {
     }
 
     public void uploadPostPicture(File file, Integer postId){
+        //todo write this method
 
     }
 }

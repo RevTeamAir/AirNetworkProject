@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import org.apache.log4j.Logger;
+
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.File;
 import java.util.List;
@@ -69,6 +73,7 @@ public class UserController {
 
     @PostMapping("/profile/{userId}")
     public ResponseEntity<JsonResponse> editUserProfilePicture (@RequestBody File profilePicture, @PathVariable Integer userId){
+        // NOTE: change file type to MultipartFile type
         // NOTE: Getting 415 unsupported media type error from postman when testing this
         // NOTE: Http 415 Media Unsupported is responded back only when the content type header you are providing is not supported by the application.
         // RequestBody should not be a file
