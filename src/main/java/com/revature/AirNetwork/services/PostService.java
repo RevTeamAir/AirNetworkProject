@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PostServices {
+public class PostService {
     @Autowired
     private PostDao postDao;
 
