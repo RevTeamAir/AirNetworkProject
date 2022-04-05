@@ -10,12 +10,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.apache.log4j.Logger;
+
+import org.springframework.web.multipart.MultipartFile;
+
+
 import java.io.File;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("user")
 public class UserController {
+
+    Logger logger = Logger.getLogger(UserController.class);
+
     private UserService userService;
     private S3Service s3Service;
 
@@ -76,6 +85,18 @@ public class UserController {
 
         JsonResponse jsonResponse = new JsonResponse(true, "Profile picture successfully uploaded", updatedProfilePic);
         return ResponseEntity.ok(jsonResponse);
+    }
+
+    @GetMapping("exception-thrown")
+    public ResponseEntity<String> throwException(){
+        try{
+            throw new Exception("OOPSIE");
+        }catch (Exception e){
+            logger.warn("Stack Trace?", e);
+            //e.printStackTrace();
+        }
+
+        return ResponseEntity.ok("Exception thrown");
     }
 
 }
