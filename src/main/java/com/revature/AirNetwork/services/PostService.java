@@ -23,8 +23,8 @@ public class PostService {
         return this.postDao.getOnePost(postId);
     }
 
-    public List<Post> getAllPost() {
-        return this.postDao.getAllPost();
+    public List<Post> getAllPosts() {
+        return this.postDao.getAllPosts();
     }
 
     //TODO add remove one post
