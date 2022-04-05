@@ -50,6 +50,11 @@ public class User {
 
     private String bio;
 
+    //likes foreign key (one user to many likes)
+    //TODO add constraint to user only being able to like one post at a time
+    @OneToMany(mappedBy = "userFk", cascade = CascadeType.ALL)
+    private List<Like> likes = new ArrayList<>();
+
     // need to add a constructor to validate credentials
     public User(String username, String password) {
         this.username = username;

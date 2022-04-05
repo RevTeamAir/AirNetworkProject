@@ -8,7 +8,9 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,4 +43,7 @@ public class Post {
     //MULTIPLICITY RELATIONSHIPS
     @ManyToOne
     private User authorIdFK;
+
+    @ManyToMany
+    private List<Like> likes = new ArrayList<>();
 }

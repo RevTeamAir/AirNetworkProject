@@ -3,8 +3,11 @@ package com.revature.AirNetwork.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,11 +20,11 @@ public class Like {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement
     private Integer id;
 
-    //one author to one like
-    @OneToOne
+    //One author to one like
+    @ManyToOne
     private User authorFk;
 
-    //many likes to one post
+    //many
     @ManyToOne
     private Post postFk;
 }
