@@ -24,7 +24,7 @@ public class Like {
     @ManyToOne
     private User authorFk;
 
-    //many
+    //one like per post per user
     @ManyToOne
     private Post postFk;
 
