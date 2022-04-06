@@ -39,8 +39,13 @@ public class PostService {
         return this.postDao.getAllPostsGivenUserId(userId);
     }
 
-    //TODO add remove one post
+
     public void removeOnePost(Integer postId) {
+        //get the post from the database
+        Post postToDelete = this.postDao.getOnePost(postId);
+
+        //delete the post
+        this.postDao.removePost(postToDelete);
 
     }
 

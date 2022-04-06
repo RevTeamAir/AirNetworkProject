@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public class PostDaoImpl implements PostDao{
 
-
     @PersistenceContext
     EntityManager em;
 
@@ -26,7 +25,6 @@ public class PostDaoImpl implements PostDao{
     @Override
     public List<Post> getAllPosts() {
         Session session = em.unwrap(Session.class);
-        // todo Figure out how to sort this by most recent
         return session.createQuery("FROM Post p ORDER BY p.creationDate DESC", Post.class).getResultList();
     }
 
@@ -40,13 +38,13 @@ public class PostDaoImpl implements PostDao{
     @Override
     public Post getOnePost(Integer postId) {
         Session session = em.unwrap(Session.class);
-        return null;
+        return session.get(Post.class,postId);
     }
 
     //Optional
     @Override
     public void removePost(Post post) {
         Session session = em.unwrap(Session.class);
-
+        session.delete(post);
     }
 }
