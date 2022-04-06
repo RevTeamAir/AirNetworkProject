@@ -15,20 +15,23 @@ public class LikeDaoImpl implements LikeDao {
     @PersistenceContext
     EntityManager em;
 
+
     @Override
-    public User addLike(User userId, Post postId) {
+    public Integer addLike(Like like) {
         Session session = em.unwrap(Session.class);
 
-        return null;
+        return (Integer) session.save(like);
     }
 
     @Override
-    public Like getAllLikes() {
-        return null;
+    public Like getLike(Integer likeId) {
+        Session session = em.unwrap(Session.class);
+        return session.get(Like.class, likeId);
     }
 
     @Override
-    public void removeLike() {
-
+    public void removeLike(Like like) {
+        Session session = em.unwrap(Session.class);
+        session.delete(like);
     }
 }
