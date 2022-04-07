@@ -37,6 +37,13 @@ public class UserController {
         this.s3Service = s3Service;
     }
 
+    @GetMapping
+    public ResponseEntity<JsonResponse> getAllUsers(){
+        List<User> allUsers = this.userService.getAllUsers();
+        JsonResponse jsonResponse = new JsonResponse(true, "All Users:", allUsers);
+        return ResponseEntity.ok(jsonResponse);
+    }
+
     @GetMapping("{userId}")
     public ResponseEntity<JsonResponse> getUserGivenId (@PathVariable Integer userId){
         User retrievedUser = userService.getUserGivenId(userId);
