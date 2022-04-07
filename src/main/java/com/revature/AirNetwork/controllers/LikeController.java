@@ -8,6 +8,7 @@ import com.revature.AirNetwork.services.LikeService;
 import com.revature.AirNetwork.services.PostService;
 import com.revature.AirNetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +27,7 @@ public class LikeController {
     }
 
     @PostMapping("{userId}/{postId}")
-    public JsonResponse addLike(@RequestBody Like like, @PathVariable Integer userId, @PathVariable Integer postId){
+    public ResponseEntity<JsonResponse> addLike(@RequestBody Like like, @PathVariable Integer userId, @PathVariable Integer postId){
         User author = userService.getUserGivenId(userId);
         like.setAuthorFk(author);
 
@@ -37,6 +38,6 @@ public class LikeController {
 
         JsonResponse jsonResponse  = new JsonResponse(true,"post successfully liked",  like);
 
-        return jsonResponse;
+        return ResponseEntity.ok(jsonResponse);
     }
 }
