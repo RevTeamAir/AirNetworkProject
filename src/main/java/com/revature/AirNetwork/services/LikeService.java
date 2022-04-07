@@ -30,22 +30,34 @@ public class LikeService {
         //get likeId
         Integer likeId = this.likeDao.addLike(like);
 
+        //persist
+
         //get persisted like object from db
         Like likeFromDb = this.likeDao.getLike(likeId);
-        //get persisted post object from db
-        Post post = this.postDao.getOnePost(likeFromDb.getPostFk().getId());
+
+
+        //TODO persist like object into likes array inside the Post model
+        /*//get persisted post object from db
+        Post post = this.postDao.getOnePost(postId);
         //add persisted post to like
         likeFromDb.setPostFk(post);
-
         //get persisted user object form db
-        User user = this.userDao.getUserGivenId(likeFromDb.getAuthorFk().getId());
+        User user = this.userDao.getUserGivenId(userId);
         //add persisted post and user object id to like
-        likeFromDb.setAuthorFk(user);
+        likeFromDb.setAuthorFk(user);*/
 
        return likeDao.getLike(likeId);
     }
 
     public Like getLike (Integer likeId) {
         return likeDao.getLike(likeId);
+    }
+
+    public void removeLike(Integer likeId) {
+        //get like by Id
+        Like like = this.likeDao.getLike(likeId);
+
+        //remove the like
+        this.likeDao.removeLike(like);
     }
 }

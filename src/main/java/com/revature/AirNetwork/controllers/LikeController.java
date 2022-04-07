@@ -27,7 +27,8 @@ public class LikeController {
     }
 
     @PostMapping("{userId}/{postId}")
-    public ResponseEntity<JsonResponse> addLike(@RequestBody Like like, @PathVariable Integer userId, @PathVariable Integer postId){
+    public ResponseEntity<JsonResponse> addLike(@PathVariable Integer userId, @PathVariable Integer postId){
+        Like like = new Like();
         User author = userService.getUserGivenId(userId);
         like.setAuthorFk(author);
 
@@ -38,6 +39,21 @@ public class LikeController {
 
         JsonResponse jsonResponse  = new JsonResponse(true,"post successfully liked",  like);
 
+        return ResponseEntity.ok(jsonResponse);
+    }
+
+    @GetMapping("{likeId}")
+    public ResponseEntity<JsonResponse> getLike(@PathVariable Integer likeId){
+        Like grabbedLike = likeService.getLike(likeId);
+        JsonResponse jsonResponse = new JsonResponse(true, "like successfully grabbed", grabbedLike);
+        return ResponseEntity.ok(jsonResponse);
+    }
+
+    @DeleteMapping("{likeId}")
+    public ResponseEntity<JsonResponse> removeLike(@PathVariable Integer likeId) {
+        likeService.removeLike(likeId);
+        Like like = likeService.getLike(likeId);
+        JsonResponse jsonResponse = new JsonResponse(true, "like successfully removed", like);
         return ResponseEntity.ok(jsonResponse);
     }
 }
