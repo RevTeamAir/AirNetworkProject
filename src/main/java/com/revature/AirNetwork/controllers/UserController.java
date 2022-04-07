@@ -23,8 +23,8 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
 
-    private UserService userService;
     private S3Service s3Service;
+    private UserService userService;
 
     public UserController() {
     }
@@ -91,17 +91,5 @@ public class UserController {
         JsonResponse jsonResponse = new JsonResponse(true, "Profile picture successfully uploaded", updatedProfilePic);
         return ResponseEntity.ok(jsonResponse);
     }
-
-    /*@GetMapping("exception-thrown")
-    public ResponseEntity<String> throwException(){
-        try{
-            throw new Exception("OOPSIE");
-        }catch (Exception e){
-            logger.warn("Stack Trace?", e);
-            //e.printStackTrace();
-        }
-
-        return ResponseEntity.ok("Exception thrown");
-    }*/
 
 }
