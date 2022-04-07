@@ -10,4 +10,6 @@ public class AirNetworkApplication {
 		SpringApplication.run(AirNetworkApplication.class, args);
 	}
 
+
 }
+

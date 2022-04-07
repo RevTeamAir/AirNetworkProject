@@ -1,5 +1,7 @@
 package com.revature.AirNetwork.models;
 
+
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

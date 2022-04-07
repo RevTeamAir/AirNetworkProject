@@ -4,13 +4,13 @@ import com.revature.AirNetwork.models.JsonResponse;
 import com.revature.AirNetwork.models.User;
 import com.revature.AirNetwork.services.S3Service;
 import com.revature.AirNetwork.services.UserService;
+/*import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import org.apache.log4j.Logger;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,8 +22,6 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController {
-
-    Logger logger = Logger.getLogger(UserController.class);
 
     private UserService userService;
     private S3Service s3Service;
@@ -87,7 +85,7 @@ public class UserController {
         return ResponseEntity.ok(jsonResponse);
     }
 
-    @GetMapping("exception-thrown")
+    /*@GetMapping("exception-thrown")
     public ResponseEntity<String> throwException(){
         try{
             throw new Exception("OOPSIE");
@@ -97,6 +95,6 @@ public class UserController {
         }
 
         return ResponseEntity.ok("Exception thrown");
-    }
+    }*/
 
 }
