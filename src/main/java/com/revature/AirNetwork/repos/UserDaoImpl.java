@@ -2,6 +2,7 @@ package com.revature.AirNetwork.repos;
 
 import com.revature.AirNetwork.models.User;
 import org.hibernate.Session;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     EntityManager em;
