@@ -30,7 +30,7 @@ class PostServiceTest {
         Mockito.when(this.postDao.createPost(postToPass)).thenReturn(postId);
         Mockito.when(this.postDao.getOnePost(postId));*/
         postService.createPost(postToPass);
-        ((PostDao)Mockito.verify(this.postDao, Mockito.times(1 )) ).createPost(postToPass);
+        Mockito.verify(this.postDao, Mockito.times(1 )).createPost(postToPass);
     }
 
     @Test
@@ -62,7 +62,7 @@ class PostServiceTest {
     void removeOnePost() {
         Integer postId = 1;
         this.postService.removeOnePost(postId);
-        ((PostDao)Mockito.verify(this.postDao)).removePost(this.postDao.getOnePost(postId));
+        Mockito.verify(this.postDao).removePost(this.postDao.getOnePost(postId));
     }
 }
 

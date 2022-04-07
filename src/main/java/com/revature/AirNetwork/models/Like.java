@@ -1,13 +1,10 @@
 package com.revature.AirNetwork.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.engine.internal.Cascade;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,10 +19,10 @@ public class Like {
 
     //One author to one like
     @ManyToOne
+    @JsonIgnoreProperties({"posts"})
     private User authorFk;
 
     //one like per post per user
     @ManyToOne
     private Post postFk;
-
 }
