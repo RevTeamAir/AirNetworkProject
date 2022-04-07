@@ -65,7 +65,7 @@ public class PostController {
 
     @DeleteMapping("{postId}")
     public ResponseEntity<JsonResponse> deleteOnePost(@PathVariable Integer postId){
-        postService.removeOnePost(postId); // deleting post 
+        postService.removeOnePost(postId); // deleting post
         JsonResponse jsonResponse = new JsonResponse(true, "Post with id " + postId + " was deleted", null);
         return ResponseEntity.ok(jsonResponse);
     }
