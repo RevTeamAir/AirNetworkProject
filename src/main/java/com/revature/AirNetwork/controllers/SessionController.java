@@ -28,7 +28,7 @@ public class SessionController {
     }
 
     @PostMapping
-    public ResponseEntity<JsonResponse> login (HttpSession httpSession, @RequestBody User userLoggingIn){
+    public ResponseEntity<JsonResponse> loginSession (HttpSession httpSession, @RequestBody User userLoggingIn){
         //validating credentials
         User retrievedUser = userService.validateCredentials(userLoggingIn.getUsername(),userLoggingIn.getPassword());
 
@@ -51,7 +51,7 @@ public class SessionController {
     }
 
     @DeleteMapping
-    public ResponseEntity<JsonResponse> logout (HttpSession httpSession){
+    public ResponseEntity<JsonResponse> logoutSession (HttpSession httpSession){
         httpSession.invalidate();
         JsonResponse jsonResponse = new JsonResponse(true, "Successfully logged out and session invalidated.", null);
         return ResponseEntity.ok(jsonResponse);

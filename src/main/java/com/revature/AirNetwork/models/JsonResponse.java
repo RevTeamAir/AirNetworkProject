@@ -1,6 +1,7 @@
 package com.revature.AirNetwork.models;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @NoArgsConstructor
