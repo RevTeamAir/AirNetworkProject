@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 
@@ -77,19 +78,20 @@ public class UserController {
         return ResponseEntity.ok(jsonResponse);
     }
 
-    @PostMapping("/profile/{userId}")
-    public ResponseEntity<JsonResponse> editUserProfilePicture (@RequestBody File profilePicture, @PathVariable Integer userId){
-        // NOTE: change file type to MultipartFile type
-        // NOTE: Getting 415 unsupported media type error from postman when testing this
-        // NOTE: Http 415 Media Unsupported is responded back only when the content type header you are providing is not supported by the application.
-        // RequestBody should not be a file
+    @PostMapping("/upload/{userId}")
+    public ResponseEntity<JsonResponse> editUserProfilePicture (@RequestParam("file") MultipartFile uploadedFile, @PathVariable Integer userId){
 
+        try {
+           User updatedProfilePic = s3Service.uploadProfilePicture(uploadedFile,userId);
+            JsonResponse jsonResponse = new JsonResponse(true, "Profile picture successfully uploaded", updatedProfilePic);
+            return ResponseEntity.ok(jsonResponse);
 
-        // todo need to add S3 functionality to add/update profile picture
-        User updatedProfilePic = s3Service.uploadProfilePicture(profilePicture,userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JsonResponse jsonResponse = new JsonResponse(false, "file loading is not successful", null);
+            return ResponseEntity.ok(jsonResponse);
+        }
 
-        JsonResponse jsonResponse = new JsonResponse(true, "Profile picture successfully uploaded", updatedProfilePic);
-        return ResponseEntity.ok(jsonResponse);
     }
 
 }

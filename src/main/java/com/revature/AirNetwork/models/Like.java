@@ -19,10 +19,11 @@ public class Like {
 
     //One author to one like
     @ManyToOne
-    @JsonIgnoreProperties({"posts"})
+    @JsonIgnoreProperties({"likes", "posts"})
     private User authorFk;
 
     //one like per post per user
     @ManyToOne
+    @JsonIgnoreProperties({"likes"})
     private Post postFk;
 }
