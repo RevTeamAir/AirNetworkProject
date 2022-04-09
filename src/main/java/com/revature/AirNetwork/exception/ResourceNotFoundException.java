@@ -8,6 +8,7 @@ public class ResourceNotFoundException {
     private String resourceName;
     private String fieldName;
     private Object fieldValue;
+    private String message;
 
     public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
         //super(resourceName, fieldName, fieldValue);
@@ -26,6 +27,10 @@ public class ResourceNotFoundException {
 
     public Object getFieldValue() {
         return fieldValue;
+    }
+
+    public Object getMessage() {
+        return "";
     }
 }
 
