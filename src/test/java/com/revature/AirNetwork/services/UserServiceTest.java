@@ -13,9 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceTest {
     private UserService userService;
     private UserDao userDao = Mockito.mock(UserDao.class);
+    private EncryptionServiceImpl encryptionService = Mockito.mock(EncryptionServiceImpl.class);
 
     public UserServiceTest(){
-        this.userService = new UserService(userDao);
+        this.userService = new UserService(userDao, encryptionService);
     }
 
 
