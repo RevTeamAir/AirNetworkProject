@@ -27,11 +27,6 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    // @ColumnTransformer(read = "pgp_sym_decrypt(password, ‘mySecretKey’)", write = "pgp_sym_encrypt(?, ‘mySecretKey’)")
-    // need to figure out how to define the secret key
-
-    //@ColumnTransformer(read = "pgp_sym_decrypt(password, ${SECRET_KEY})", write = "pgp_sym_encrypt(?, $SECRET_KEY)") // <--- secret key would be in env variable??
-    //@ColumnTransformer(read = "pgp_sym_decrypt(password, 'mySecretKey')", write = "pgp_sym_encrypt(?, 'mySecretKey')")
     @Column(nullable = false)
     private String password;
 

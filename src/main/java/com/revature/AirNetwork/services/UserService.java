@@ -11,14 +11,17 @@ import java.util.List;
 @Service
 @Transactional //ensures that every method in the class waits until the whole method is complete before making the official commit to the database
 public class UserService {
+
     private UserDao userDao;
+    private EncryptionServiceImpl encryptionService;
 
     public UserService() {
     }
 
     @Autowired
-    public UserService(UserDao userDao) {
+    public UserService(UserDao userDao, EncryptionServiceImpl encryptionService) {
         this.userDao = userDao;
+        this.encryptionService = encryptionService;
     }
 
     public List<User> getAllUsers (){
@@ -39,8 +42,11 @@ public class UserService {
         if(userLoggingIn == null)
             return null;
 
+        //need to decrypt password first before validating it
+        String decryptedPassword = encryptionService.decrypt(userLoggingIn.getPassword());
+
         //Invalid password so return null
-        if(!password.equals(userLoggingIn.getPassword()))
+        if(!password.equals(decryptedPassword))
             return null;
 
         return userLoggingIn;
@@ -60,6 +66,13 @@ public class UserService {
 
         if (userByUsername == null && userByEmail == null){
             // both the username and email are available (they are not found in the database) -> create the user
+
+            //first encrypt their password
+            String passwordToEncrypt = userToCreate.getPassword();
+            String encryptedPassword = encryptionService.encrypt(passwordToEncrypt);
+            userToCreate.setPassword(encryptedPassword);
+
+            // then create the user
             return this.userDao.createUser(userToCreate);
         } else {
             // either the username is taken already or the email is taken already -> return null

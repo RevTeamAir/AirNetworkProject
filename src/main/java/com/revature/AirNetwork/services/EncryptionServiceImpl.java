@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 @Service
-public class EncryptionServiceimpl implements EncryptionService{
+public class EncryptionServiceImpl implements EncryptionService{
 
     private static final String AES_KEY = "TOKEN_SECURITY_MOGLIX_AES_KEY_IN_JWT";
 
