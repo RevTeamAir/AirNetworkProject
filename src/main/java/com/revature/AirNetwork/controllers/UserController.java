@@ -70,12 +70,16 @@ public class UserController {
         // NOTE: user that is returned to the JSON Response has a creationDate of NULL  <- may need to fix that, or we can work around it
 
         // updating the user
-        userService.updateUserInfo(userToUpdate);
+        User updatedUser = userService.updateUserInfo(userToUpdate);
 
-        // returning the updated user
-        User updatedUser = userService.getUserGivenId(userToUpdate.getId());
-        JsonResponse jsonResponse = new JsonResponse(true, "Information for user with id " + updatedUser.getId() + " was successfully updated.", updatedUser);
+        if (updatedUser != null) {
+            JsonResponse jsonResponse = new JsonResponse(true, "Information for user with id " + updatedUser.getId() + " was successfully updated.", updatedUser);
+            return ResponseEntity.ok(jsonResponse);
+        }
+
+        JsonResponse jsonResponse = new JsonResponse(false, "Username or Email already taken", null);
         return ResponseEntity.ok(jsonResponse);
+
     }
 
     @PostMapping("/upload/{userId}")

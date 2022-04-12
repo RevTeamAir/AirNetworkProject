@@ -73,7 +73,7 @@ public class PostController {
     }
 
 
-    //todo test this functionality after we figure out frontend
+    //todo test this endpoint
     @PostMapping ("/picture/{userId}")
     public ResponseEntity<JsonResponse> createPostWithPicture(@RequestParam("file") MultipartFile uploadedFile, @RequestBody Post postToCreate, @PathVariable Integer userId) throws IOException {
 

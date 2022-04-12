@@ -1,11 +1,14 @@
 package com.revature.AirNetwork.services;
 
+import com.revature.AirNetwork.exception.ResourceNotFoundException;
 import com.revature.AirNetwork.models.User;
 import com.revature.AirNetwork.repos.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -52,12 +55,18 @@ public class UserService {
         return userLoggingIn;
     }
 
-    public User updateUserInfo(User user){
-        userDao.updateUser(user);
-        return userDao.getUserGivenId(user.getId());
+    public User updateUserInfo(User userToUpdate){
+
+        //first encrypt their password if they changed it
+        String passwordToEncrypt = userToUpdate.getPassword();
+        String encryptedPassword = encryptionService.encrypt(passwordToEncrypt);
+        userToUpdate.setPassword(encryptedPassword);
+
+        userDao.updateUser(userToUpdate);
+        return userDao.getUserGivenId(userToUpdate.getId());
     }
 
-    // this doesn't pass the tests for some unknown reason (JUNIT)
+
     public Integer createUser (User userToCreate) {
         // checking if username and email are available
         // both of these should return null if email and username are available
