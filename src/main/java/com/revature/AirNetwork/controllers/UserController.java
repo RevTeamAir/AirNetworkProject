@@ -94,4 +94,25 @@ public class UserController {
 
     }
 
+    @PatchMapping("{userId}")
+    public ResponseEntity<JsonResponse> deleteUserProfilePicture(@PathVariable Integer userId){
+
+        try {
+            User userToUpdate = userService.getUserGivenId(userId);
+            userToUpdate.setProfilePictureLocation(null);
+
+            // persist profile picture change in database
+            User updatedUser = userService.updateUserInfo(userToUpdate);
+
+            JsonResponse jsonResponse = new JsonResponse(true, "Profile Picture Deleted", updatedUser);
+            return ResponseEntity.ok(jsonResponse);
+
+        } catch (NullPointerException e){
+
+            JsonResponse jsonResponse = new JsonResponse(false, "User Not Found", null);
+            return ResponseEntity.ok(jsonResponse);
+        }
+
+    }
+
 }

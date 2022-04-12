@@ -6,6 +6,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.revature.AirNetwork.models.Post;
 import com.revature.AirNetwork.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @Service
 public class S3Service {
     private UserService userService;
+    private PostService postService;
 
     ////////////////// HAVE THESE IN ENVIRONMENT VARIABLES BEFORE PUSHING  ////////////////////////
     private String awsId = System.getenv("S3_BUCKET_ID");
@@ -28,12 +30,13 @@ public class S3Service {
     }
 
     @Autowired
-    public S3Service(UserService userService) {
+    public S3Service(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     // user id passed from user controller to here using path param
-    // profile picture image file passed as a File object from user controller
+    // profile picture image file passed as a MultipartFile object from user controller
     // returns the updated user with the profile picture location
     public User uploadProfilePicture (MultipartFile file, Integer userId) throws IOException {
         // prepare our credentials for the next statement
@@ -62,8 +65,28 @@ public class S3Service {
         return userService.updateUserInfo(userToUpdate);
     }
 
-    public void uploadPostPicture(File file, Integer postId){
-        //todo write this method
+    // make this only return the location string and implement this in the create post controller method
+    public String addPictureToPost (MultipartFile file) throws IOException {
+        //todo test this method
+
+        // prepare our credentials for the next statement
+        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsId, secretKey);
+
+        //create a connection with the s3 client
+        AmazonS3 s3Client = AmazonS3ClientBuilder
+                .standard()
+                .withRegion(Regions.fromName(region))
+                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .build();
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(file.getContentType());
+        objectMetadata.setContentLength(file.getSize());
+
+        // upload the image to S3
+        s3Client.putObject(bucketName, "postPics/" + file.getOriginalFilename(), file.getInputStream(), objectMetadata);
+
+        return "https://ons3bucket.s3.amazonaws.com/postPics/" + file.getOriginalFilename();
 
     }
 }

@@ -9,7 +9,9 @@ import com.revature.AirNetwork.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,7 +33,7 @@ public class PostController {
     }
 
     @PostMapping ("{userId}")
-    public ResponseEntity<JsonResponse> createPost(@RequestBody Post postToCreate, @PathVariable Integer userId){
+    public ResponseEntity<JsonResponse> createPostWithoutPicture(@RequestBody Post postToCreate, @PathVariable Integer userId){
 
         User author = userService.getUserGivenId(userId);
         postToCreate.setAuthorIdFK(author);
@@ -71,9 +73,21 @@ public class PostController {
     }
 
 
-    //todo add this functionality after we figure out s3
-    public ResponseEntity<JsonResponse> addPictureToPost(){
+    //todo test this functionality after we figure out frontend
+    @PostMapping ("/picture/{userId}")
+    public ResponseEntity<JsonResponse> createPostWithPicture(@RequestParam("file") MultipartFile uploadedFile, @RequestBody Post postToCreate, @PathVariable Integer userId) throws IOException {
 
-        return null;
+        String picS3Location = s3Service.addPictureToPost(uploadedFile);
+
+        postToCreate.setPostImageLocation(picS3Location);
+
+        User author = userService.getUserGivenId(userId);
+        postToCreate.setAuthorIdFK(author);
+
+        Post createdPost = this.postService.createPost(postToCreate);
+
+        JsonResponse jsonResponse  = new JsonResponse(true,"Post successfully Created",  postToCreate);
+        return ResponseEntity.ok(jsonResponse);
+
     }
 }
