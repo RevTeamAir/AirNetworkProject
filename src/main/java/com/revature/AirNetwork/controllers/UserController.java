@@ -22,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("user")
+@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class UserController {
 
     private S3Service s3Service;
