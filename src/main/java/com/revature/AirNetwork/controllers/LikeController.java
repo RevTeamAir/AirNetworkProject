@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("like")
+@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class LikeController {
 
     private LikeService likeService;

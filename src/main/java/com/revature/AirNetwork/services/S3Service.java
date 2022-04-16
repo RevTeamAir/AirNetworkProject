@@ -67,7 +67,6 @@ public class S3Service {
 
     // make this only return the location string and implement this in the create post controller method
     public String addPictureToPost (MultipartFile file) throws IOException {
-        //todo test this method
 
         // prepare our credentials for the next statement
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsId, secretKey);

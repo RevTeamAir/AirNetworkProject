@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("post")
+@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class PostController {
 
     private UserService userService;
@@ -75,10 +76,12 @@ public class PostController {
 
     //todo test this endpoint
     @PostMapping ("/picture/{userId}")
-    public ResponseEntity<JsonResponse> createPostWithPicture(@RequestParam("file") MultipartFile uploadedFile, @RequestBody Post postToCreate, @PathVariable Integer userId) throws IOException {
+    public ResponseEntity<JsonResponse> createPostWithPicture(@RequestParam("file") MultipartFile uploadedFile, @RequestParam String description, @PathVariable Integer userId) throws IOException {
+
+        Post postToCreate = new Post();
+        postToCreate.setDescription(description);
 
         String picS3Location = s3Service.addPictureToPost(uploadedFile);
-
         postToCreate.setPostImageLocation(picS3Location);
 
         User author = userService.getUserGivenId(userId);
@@ -88,6 +91,7 @@ public class PostController {
 
         JsonResponse jsonResponse  = new JsonResponse(true,"Post successfully Created",  postToCreate);
         return ResponseEntity.ok(jsonResponse);
-
     }
+
+
 }
