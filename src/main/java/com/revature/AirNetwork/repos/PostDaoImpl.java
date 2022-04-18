@@ -41,6 +41,12 @@ public class PostDaoImpl implements PostDao{
         return session.get(Post.class,postId);
     }
 
+    @Override
+    public void updatePost(Post post) {
+        Session session = em.unwrap(Session.class);
+        session.update(post);
+    }
+
     //Optional
     @Override
     public void removePost(Post post) {
