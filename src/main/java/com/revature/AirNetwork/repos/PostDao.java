@@ -10,6 +10,7 @@ public interface PostDao {
     List<Post> getAllPosts();  // used for the main feed
     List<Post> getAllPostsGivenUserId(Integer userId);  // used to build user profile in front-end
     Post getOnePost(Integer postId); // used to add a picture to a post
+    void updatePost(Post post);
 
     //optional
     void removePost(Post post);

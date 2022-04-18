@@ -57,4 +57,25 @@ public class LikeController {
         JsonResponse jsonResponse = new JsonResponse(true, "like successfully removed", like);
         return ResponseEntity.ok(jsonResponse);
     }
+
+    @PostMapping("author/{userId}/post/{postId}")
+    public ResponseEntity<JsonResponse> toggleLike (@PathVariable Integer userId, @PathVariable Integer postId){
+
+        Like addedOdDeleted = this.likeService.toggleLike(userId, postId);
+
+        //System.out.println(addedOdDeleted);
+
+        JsonResponse jsonResponse;
+
+        if (addedOdDeleted != null) {
+            jsonResponse = new JsonResponse(true, "like successfully added", addedOdDeleted);
+        } else {
+
+            jsonResponse = new JsonResponse(false, "like successfully removed", null);
+        }
+
+
+        return ResponseEntity.ok(jsonResponse);
+
+    }
 }
