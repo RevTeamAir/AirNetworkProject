@@ -34,4 +34,10 @@ public class LikeDaoImpl implements LikeDao {
         Session session = em.unwrap(Session.class);
         session.delete(like);
     }
+
+    @Override
+    public Like getLikeByPostIdAndAuthorId(Integer authorId, Integer postId) {
+        Session session = em.unwrap(Session.class);
+        return session.createQuery("select l from Like l where l.authorFk.id = " + authorId + "and l.postFk.id = " + postId, Like.class).getSingleResult();
+    }
 }

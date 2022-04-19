@@ -27,20 +27,32 @@ public class LikeController {
         this.userService = userService;
     }
 
-    @PostMapping("{userId}/{postId}")
-    public ResponseEntity<JsonResponse> addLike(@PathVariable Integer userId, @PathVariable Integer postId){
-        Like like = new Like();
-        User author = userService.getUserGivenId(userId);
-        like.setAuthorFk(author);
+    @PostMapping("author/{userId}/post/{postId}")
+    public ResponseEntity<JsonResponse> toggleLike(@PathVariable Integer userId, @PathVariable Integer postId){
 
-        Post post = postService.getOnePost(postId);
-        like.setPostFk(post);
+        try {
+            Like like = new Like();
+            User author = userService.getUserGivenId(userId);
+            like.setAuthorFk(author);
 
-        this.likeService.addLike(like);
+            Post post = postService.getOnePost(postId);
+            like.setPostFk(post);
 
-        JsonResponse jsonResponse  = new JsonResponse(true,"post successfully liked",  like);
+            this.likeService.addLike(like);
 
-        return ResponseEntity.ok(jsonResponse);
+            JsonResponse jsonResponse = new JsonResponse(true, "Post successfully liked", like);
+
+            return ResponseEntity.ok(jsonResponse);
+
+        }catch (Exception e){
+
+            Like likeToRemove = likeService.getLikeByPostIdAndAuthorId(userId,postId);
+            Integer likeId = likeToRemove.getId();
+            likeService.removeLike(likeId);
+
+            JsonResponse jsonResponse = new JsonResponse(false, "Like successfully deleted", null);
+            return ResponseEntity.ok(jsonResponse);
+        }
     }
 
     @GetMapping("{likeId}")
@@ -58,24 +70,11 @@ public class LikeController {
         return ResponseEntity.ok(jsonResponse);
     }
 
-    @PostMapping("author/{userId}/post/{postId}")
-    public ResponseEntity<JsonResponse> toggleLike (@PathVariable Integer userId, @PathVariable Integer postId){
 
-        Like addedOdDeleted = this.likeService.toggleLike(userId, postId);
-
-        //System.out.println(addedOdDeleted);
-
-        JsonResponse jsonResponse;
-
-        if (addedOdDeleted != null) {
-            jsonResponse = new JsonResponse(true, "like successfully added", addedOdDeleted);
-        } else {
-
-            jsonResponse = new JsonResponse(false, "like successfully removed", null);
-        }
-
-
+    @GetMapping("{userId}/{postId}")
+    public ResponseEntity<JsonResponse> getLikeByPostIdAndAuthorId(@PathVariable Integer userId, @PathVariable Integer postId){
+        Like retrievedLike = likeService.getLikeByPostIdAndAuthorId(userId,postId);
+        JsonResponse jsonResponse = new JsonResponse(true, "like: ", retrievedLike);
         return ResponseEntity.ok(jsonResponse);
-
     }
 }
