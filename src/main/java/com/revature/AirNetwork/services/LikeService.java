@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -59,5 +60,10 @@ public class LikeService {
 
         //remove the like
         this.likeDao.removeLike(like);
+    }
+
+
+    public Like getLikeByPostIdAndAuthorId(Integer authorId, Integer postId){
+        return likeDao.getLikeByPostIdAndAuthorId(authorId,postId);
     }
 }

@@ -62,7 +62,14 @@ public class PostController {
     @GetMapping("{postId}")
     public ResponseEntity<JsonResponse> getOnePost(@PathVariable Integer postId){
         Post retrievedPost = postService.getOnePost(postId);
-        JsonResponse jsonResponse= new JsonResponse(true, "Retrieved post with id " + postId + ":", retrievedPost);
+
+        JsonResponse jsonResponse;
+
+        if (retrievedPost != null) {
+            jsonResponse = new JsonResponse(true, "Retrieved post with id " + postId + ":", retrievedPost);
+        } else {
+            jsonResponse = new JsonResponse(false, "Post with id " + postId + " does not exist", null);
+        }
         return ResponseEntity.ok(jsonResponse);
     }
 

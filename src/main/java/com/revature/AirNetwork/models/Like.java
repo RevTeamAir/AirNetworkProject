@@ -10,16 +10,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "network_likes")
+@Table(name = "network_likes" , uniqueConstraints = @UniqueConstraint(columnNames=("authorFk")))
 public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincrement
     private Integer id;
 
-    //One author to one like
+
     @ManyToOne
     @JsonIgnoreProperties({"likes", "posts"})
+    @JoinColumn(name="authorFk")
     private User authorFk;
 
     //one like per post per user
