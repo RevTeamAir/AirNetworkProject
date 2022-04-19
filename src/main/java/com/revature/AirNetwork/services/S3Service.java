@@ -88,4 +88,26 @@ public class S3Service {
         return "https://ons3bucket.s3.amazonaws.com/postPics/" + file.getOriginalFilename();
 
     }
+
+    public String uploadFile(MultipartFile file) throws IOException {
+        // prepare our credentials for the next statement
+        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsId, secretKey);
+
+        //create a connection with the s3 client
+        AmazonS3 s3Client = AmazonS3ClientBuilder
+                .standard()
+                .withRegion(Regions.fromName(region))
+                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .build();
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(file.getContentType());
+        objectMetadata.setContentLength(file.getSize());
+
+        // upload the image to S3
+        s3Client.putObject(bucketName, "postPics/" + file.getOriginalFilename(), file.getInputStream(), objectMetadata);
+
+        return "https://ons3bucket.s3.amazonaws.com/AirNetworkPictures/" + file.getOriginalFilename();
+
+    }
 }
