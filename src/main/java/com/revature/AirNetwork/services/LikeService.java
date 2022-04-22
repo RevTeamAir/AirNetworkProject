@@ -28,6 +28,21 @@ public class LikeService {
     }
 
     public Like addLike (Like like) {
+
+        Post postToLike = like.getPostFk();
+
+        Integer likeCounter = postToLike.getLikeCount();
+
+        if (likeCounter == null){
+            likeCounter = 1;
+        } else{
+            likeCounter ++;
+        }
+
+
+        postToLike.setLikeCount(likeCounter);
+        postDao.updatePost(postToLike);
+
         //get likeId
         Integer likeId = this.likeDao.addLike(like);
 
@@ -57,6 +72,19 @@ public class LikeService {
     public void removeLike(Integer likeId) {
         //get like by Id
         Like like = this.likeDao.getLike(likeId);
+
+        Post postToUnlike = like.getPostFk();
+
+        Integer likeCounter = postToUnlike.getLikeCount();
+
+        if (likeCounter == null){
+            likeCounter = 0;
+        } else{
+            likeCounter --;
+        }
+
+        postToUnlike.setLikeCount(likeCounter);
+        postDao.updatePost(postToUnlike);
 
         //remove the like
         this.likeDao.removeLike(like);

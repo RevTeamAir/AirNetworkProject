@@ -46,12 +46,19 @@ public class LikeController {
 
         }catch (Exception e){
 
+            try{
             Like likeToRemove = likeService.getLikeByPostIdAndAuthorId(userId,postId);
             Integer likeId = likeToRemove.getId();
             likeService.removeLike(likeId);
 
             JsonResponse jsonResponse = new JsonResponse(false, "Like successfully deleted", null);
             return ResponseEntity.ok(jsonResponse);
+
+            } catch (Exception e2){
+                JsonResponse jsonResponse = new JsonResponse(false, "An error happened", null);
+                return ResponseEntity.ok(jsonResponse);
+            }
+
         }
     }
 
