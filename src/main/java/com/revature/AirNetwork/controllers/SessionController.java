@@ -37,7 +37,7 @@ public class SessionController {
 
         // Invalid username or password
         if (retrievedUser == null){
-            JsonResponse jsonResponse = new JsonResponse(false, "Invalid Username or Password", null);
+            JsonResponse jsonResponse = new JsonResponse(false, "Invalid Username or Password", userLoggingIn);
             return ResponseEntity.ok(jsonResponse);
 
         } else { //valid credentials

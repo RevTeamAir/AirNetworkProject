@@ -45,11 +45,14 @@ public class UserService {
         if(userLoggingIn == null)
             return null;
 
-        //need to decrypt password first before validating it
+        /*//need to decrypt password first before validating it
         String decryptedPassword = encryptionService.decrypt(userLoggingIn.getPassword());
 
         //Invalid password so return null
         if(!password.equals(decryptedPassword))
+            return null;*/
+
+        if(!password.equals(userLoggingIn.getPassword()))
             return null;
 
         return userLoggingIn;
@@ -57,10 +60,10 @@ public class UserService {
 
     public User updateUserInfo(User userToUpdate){
 
-        //first encrypt their password if they changed it
+        /*//first encrypt their password if they changed it
         String passwordToEncrypt = userToUpdate.getPassword();
         String encryptedPassword = encryptionService.encrypt(passwordToEncrypt);
-        userToUpdate.setPassword(encryptedPassword);
+        userToUpdate.setPassword(encryptedPassword);*/
 
         userDao.updateUser(userToUpdate);
         return userDao.getUserGivenId(userToUpdate.getId());
@@ -76,11 +79,11 @@ public class UserService {
         if (userByUsername == null && userByEmail == null){
             // both the username and email are available (they are not found in the database) -> create the user
 
-            //first encrypt their password
+            /*//first encrypt their password
             String passwordToEncrypt = userToCreate.getPassword();
             String encryptedPassword = encryptionService.encrypt(passwordToEncrypt);
             userToCreate.setPassword(encryptedPassword);
-
+*/
             // then create the user
             return this.userDao.createUser(userToCreate);
         } else {
